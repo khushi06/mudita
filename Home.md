@@ -6,4 +6,4 @@ Chaos Monkey is a service which identifies groups of systems and randomly termin
 
 Failures happen, and they inevitably happen when least desired. If your application can't tolerate a system failure would you rather find out by being paged at 3am or after you are in the office having already had your morning coffee? Even if you are confident that your architecture can tolerate a system failure, are you sure it will still be able to next week, how about next month? Software is complex and dynamic, that "simple fix" you put in place last week could have undesired consequences. Do your traffic load balancers correctly detect and route requests around system failures? Can you reliably rebuild your systems? Perhaps an engineer "quick patched" a live system last week and forget to commit the changes to your source repository?
 
-Refer to the [Quick start guide](Quick-Start-Guide) to get started setting up and using Chaos Monkey
+Refer to the [Quick start guide](wiki/Quick-Start-Guide) to get started setting up and using Chaos Monkey
