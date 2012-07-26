@@ -1,49 +1,198 @@
+## Setup Auto Scaling Group
+First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have nothing to attack.
 
-download http://ec2-downloads.s3.amazonaws.com/AutoScaling-2011-01-01.zip
-unzip AutoScaling-2011-01-01.zip
-cd AutoScaling-1.0.61.0/
-export AWS_AUTO_SCALING_HOME=`pwd`
-export AWS_AUTO_SCALING_URL=http://autoscaling.us-west-2.amazonaws.com
+### Get Tools
+```shell
+    $ wget http://ec2-downloads.s3.amazonaws.com/AutoScaling-2011-01-01.zip
+    $ unzip AutoScaling-2011-01-01.zip
+    $ cd AutoScaling-1.0.61.0/
+    $ export AWS_AUTO_SCALING_HOME=`pwd` 
+```
+### Setup Env
+```shell
+    $ export AWS_AUTO_SCALING_URL=http://autoscaling.us-west-2.amazonaws.com
+    $ export ACCOUNT_KEY=your_account_key
+    $ export SECRET_KEY=your_secret_key
+```
+* *Note:* check your AWS EC2 Management Console to see what regions are available.  This example assumes us-west-2 is being used.
 
-./bin/as-create-launch-config lc1 --instance-type t1.micro -I $ACCOUNT_KEY -S $SECRET_KEY --image-id ami-fcf27fcc
+### Create Launch Config
+```shell 
+    $ $AWS_AUTO_SCALING_HOME/bin/as-create-launch-config lc1 --instance-type t1.micro -I $ACCOUNT_KEY -S $SECRET_KEY --image-id ami-fcf27fcc
+    OK-Created launch config
+```
+* *Note:* ami-fcf27fcc is a public ami which contains "Debian 6.0 Squeeze i386 image".  The contents of the ami are not relevent for this Quick Start.  If you are trying to run these examples for a region other than us-west-2, you will need to find a different ami that is available for your region.  You can find available public amis to test with from the AWS EC2 Management Console.
 
-./bin/as-create-auto-scaling-group monkey-sacrafice -I $ACCOUNT_KEY -S $SECRET_KEY --launch-configuration lc1 --availability-zones us-west-2a --min-size 1 --max-size 1
+### Create Auto Scaling Group
+```shell
+    $ $AWS_AUTO_SCALING_HOME/bin/as-create-auto-scaling-group monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --launch-configuration lc1 --availability-zones us-west-2a --min-size 1 --max-size 1
+    OK-Created AutoScalingGroup
+```
+* *Note:*  the availability-zone should be set to a zone available to our account.
 
-$ ./bin/as-describe-auto-scaling-groups -I $ACCOUNT_KEY -S $SECRET_KEY
-AUTO-SCALING-GROUP  monkey-sacrafice  lc1  us-west-2a  1  1  1
-INSTANCE  i-6d0aa55e  us-west-2a  InService  Healthy  monkey-sacrafice
+### See Auto Scaling Group running
+```shell
+    $ $AWS_AUTO_SCALING_HOME/bin/as-describe-auto-scaling-groups -I $ACCOUNT_KEY -S $SECRET_KEY
+    AUTO-SCALING-GROUP  monkey-target  lc1  us-west-2a  1  1  1
+    INSTANCE  i-8b55fbb8  us-west-2a  InService  Healthy  lc1
+```
+* *Note:* It might take a few minutes before the instance is Health and InService
+
+## Setup SimpleDB Table
 
 ### Create SIMIAN_ARMY SimpleDB Table
-    createDomain() {
-        timestamp=$(date -u +"%FT%TZ" --date='5 min ago' | sed s/:/%3A/g)
-        params="AWSAccessKeyId=$ACCESS_KEY&Action=CreateDomain&DomainName=$1&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=$timestamp&Version=2009-04-15"
-        hash=$(echo -ne "GET\nsdb.us-west-2.amazonaws.com\n/\n$params" | openssl sha256 -hmac "$SECRET_KEY" -binary | base64)
+```shell
+    $ sdb() {
+        case $(uname -s) in
+            Darwin) timestamp=$(date -uj  -f %s $(($(date +%s) - (5 * 60)))  +"%FT%TZ" | sed s/:/%3A/g);;
+            Linux)  timestamp=$(date -u +"%FT%TZ" --date='5 min ago' | sed s/:/%3A/g);;
+        esac
+        params="AWSAccessKeyId=$ACCOUNT_KEY"
+        params="$params&Action=$1"
+        [ -z "$2" ] || params="$params&DomainName=$2"
+        params="$params&SignatureMethod=HmacSHA256"
+        params="$params&SignatureVersion=2"
+        params="$params&Timestamp=$timestamp"
+        params="$params&Version=2009-04-15"
+        payload="GET\nsdb.us-west-2.amazonaws.com\n/\n$params"
+        hash=$(echo -ne $payload | openssl dgst -sha256 -hmac "$SECRET_KEY" -binary | base64)
         curl "https://sdb.us-west-2.amazonaws.com/?$params&Signature=$hash"
     }
-    createDomain SIMIAN_ARMY
+    $ sdb CreateDomain SIMIAN_ARMY
+    <?xml version="1.0"?>
+    <CreateDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>XXXXXXXX</RequestId><BoxUsage>X.XXXXXXX</BoxUsage></ResponseMetadata></CreateDomainResponse>
+    
+    $ sdb ListDomain
+    <?xml version="1.0"?>
+    <ListDomainsResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ListDomainsResult><DomainName>SIMIAN_ARMY</DomainName></ListDomainsResult><ResponseMetadata><RequestId>XXXXXXXX</RequestId><BoxUsage>X.XXXXXXXXX</BoxUsage></ResponseMetadata></ListDomainsResponse>
+```
+* *Note:* If you are not using the us-west-2 region then you will need to change the SimpleDB URI in the above sdb function to correspond to your region.  See [this document](http://docs.amazonwebservices.com/general/latest/gr/rande.html#sdb_region) for SimpleDB Region endpoints.
+* *Note:* The sdb function above is a hack, it sort of works most of the time.  If you know of a better way to create a SimpleDB table, then use it.  [Asgard](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html) allows you to trivially create SimpleDB tables.
 
-## build
-git clone git@github.com:Netflix/SimianArmy.git
-cd SimianArmy
-./gradlew build
-edit src/main/resources/simianarmy.properties
- - set secretKey
- - set account_key
- - set aws.region 
- - set isMonkeyTime=true (if on weekend or not in 9-3pm)
- - set default asg.enabled off
- - set monkey-sacrafice.enabled on
- - set monkey-sacrafice.probability=1.0
+## Build the Monkeys with Gradle
+* First check out the code from github and then build with gradle
+```shell
+    $ git clone git://github.com/Netflix/SimianArmy.git
+    Cloning into 'SimianArmy'...
+    remote: Counting objects: 968, done.
+    remote: Compressing objects: 100% (504/504), done.
+    remote: Total 968 (delta 383), reused 784 (delta 199)
+    Receiving objects: 100% (968/968), 175.08 KiB | 84 KiB/s, done.
+    Resolving deltas: 100% (383/383), done.
+    $ cd SimianArmy
+    $ ./gradlew build
+    :clean
+    :compileJava
+    :processResources
+    :classes
+    :jar
+    :javadoc
+    :javadocJar
+    :sourcesJar
+    :war
+    :assemble
+    :checkstyleMain
+    :compileTestJava
+    :processTestResources
+    :testClasses
+    :checkstyleTest
+    :findbugsMain
+    :findbugsTest
+    :pmdMain
+    :pmdTest
+    :test
+    :check
+    :build
+    
+    BUILD SUCCESSFUL
+    Total time: 43.294 secs
+```
+* For testing modify the simianarmy.properties file
+```shell
+    vi src/main/resources/simianarmy.properties
+```
+    * set simianarmy.aws.secretKey
+    * set simianarmy.aws.account_key
+    * set simianarmy.aws.region 
+    * set simianarmy.calendar.isMonkeyTime=true (if on weekend or not in 9-3pm)
+    * set simianarmy.chaos.ASG.enabled=false
+    * set simianarmy.chaos.ASG.monkey-target.enabled=true
+    * set simianarmy.chaos.ASG.monkey-target.probability=1.0
 
-* start up, need to fix logging when we terminate something
-* restart if you dont see a termination
+* *Note:* The simianarmy.chaos.leashed=true setting should still be set, this will run Chaos Monkey in a test-only
+  mode, no terminations will be done.
 
-$ curl http://localhost:8080/simianarmy/api/v1/chaos
-[{"monkeyType":"CHAOS","eventType":"CHAOS_TERMINATION","eventTime":1343287826066,"groupType":"ASG","groupName":"monkey-sacrafice"}]
+* Run the gradle jetty server to start up ChaosMonkey
+```shell
+    $ ./gradlew jettyRun
+    :compileJava UP-TO-DATE
+    :processResources UP-TO-DATE
+    :classes UP-TO-DATE
+    SLF4J: Class path contains multiple SLF4J bindings.
+    SLF4J: Found binding in [jar:file:/Users/cbennett/.gradle/wrapper/dists/gradle-1.0-milestone-9-bin/7ilkmgo2rn79vvfvd51rqf17ks/gradle-1.0-milestone-9/lib/logback-classic-1.0.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+    SLF4J: Found binding in [jar:file:/Users/cbennett/.gradle/caches/artifacts-8/filestore/org.slf4j/slf4j-log4j12/1.6.1/jar/bd245d6746cdd4e6203e976e21d597a46f115802/slf4j-log4j12-1.6.1.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+    SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+    :jettyRun
+    2012-07-26 15:43:55.129 - INFO  MonkeyRunner - [MonkeyRunner.java:56] Starting CHAOS Monkey
+    2012-07-26 15:43:55.475 - INFO  Monkey - [Monkey.java:107] CHAOS Monkey Running ...
+    2012-07-26 15:43:55.689 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:89] Group monkey-target [type ASG] enabled [prob 1.0]
+    2012-07-26 15:43:55.690 - INFO  BasicChaosInstanceSelector - [BasicChaosInstanceSelector.java:57] Group monkey-target [type ASG] got lucky: 0.8292385537513608 > 0.16666666666666666
+```
+* You will probably see "got lucky" a few times.  The default configuration is to run 6 times a day.  The probability of 1.0 is the daily probability, so each run will have 1.0/6 probability (ie 0.1666).  To get a termination you can restart a few times, it should take on average 6 tries.  If a termination happens another one will not happen again today for that group.  To guarantee that a termination happens, you can set the probability to "6.0" (ie 600% which will make sure it kills an instance on the first run).
 
-restart to verify another termination does not happpen (will only run once an hour and will not terminate same group again all day)
+Probably after a few restarts you will see:
+```
+    2012-07-26 15:49:18.650 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:89] Group monkey-target [type ASG] enabled [prob 1.0]
+    2012-07-26 15:49:18.651 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:94] leashed ChaosMonkey prevented from killing i-0156f832 from group monkey-target [ASG], set simianarmy.chaos.leashed=false
+```
 
-* verify that the instance has changed
-$ ./bin/as-describe-auto-scaling-groups -I $ACCOUNT_KEY -S $SECRET_KEY
-AUTO-SCALING-GROUP  monkey-sacrafice  lc1  us-west-2a  1  1  1
-INSTANCE i-5b218e68 us-west-2a  InService  Healthy  monkey-sacrafice
+Now Unleash the monkey:
+```shell
+    vi src/main/resources/simianarmy.properties
+```
+    * set simianarmy.chaos.leashed=false
+
+Restart the jettyRun and you should see something like:
+```
+    2012-07-26 16:08:25.517 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:89] Group monkey-target [type ASG] enabled [prob 6.0]
+    2012-07-26 16:08:26.101 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:105] Terminated i-8b55fbb8 from group monkey-target [ASG]
+```
+
+* After some time you can re-run the describe auto-scaling-group command:
+```shell
+    $ $AWS_AUTO_SCALING_HOME/bin/as-describe-auto-scaling-groups -I $ACCOUNT_KEY -S $SECRET_KEY
+    AUTO-SCALING-GROUP  monkey-target  lc1  us-west-2a  1  1  1
+    INSTANCE  i-0951ff3a  us-west-2a  InService  Healthy  lc1
+```
+* *Note:* It took several minutes for the above command to report a change for me.  To get a more current view you can look at your Instances in the AWS EC2 Management Console.
+
+With the jettyRun still running, you can test the API in a different shell:
+```shell
+    $ curl http://localhost:8080/simianarmy/api/v1/chaos
+    [{"monkeyType":"CHAOS","eventType":"CHAOS_TERMINATION","eventTime":1343344105651,"groupType":"ASG","groupName":"monkey-target"}]
+```
+
+If you restart jettyRun again it will not start Chaos Monkey immediately, it will see that a CHAOS Event happened within the last hour (Chaos Monkey runs hourly) and delay the next Chaos run.  You will see something like this:
+```
+2012-07-26 16:15:18.156 - INFO  BasicScheduler - [BasicScheduler.java:101] Detected previous events within cycle, setting CHAOS start to Thu Jul 26 17:08:25 PDT 2012
+```
+This is to prevent there case where the server is quickly restarted after a previous run, we dont want to let Chaos Monkey kill too much too rapidly.
+
+## Cleanup
+If you dont plan to run Chaos Monkey again for a while, you can delete the SimpleDB table with:
+```shell
+    $ sdb DeleteDomain SIMIAN_ARMY
+```
+
+Then you can get rid of the monkey-target test ASG.  The first step is to reduce the instance count to zero:
+```shell
+    $ $AWS_AUTO_SCALING_HOME/bin/as-update-auto-scaling-group --name monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --min-size 0 --max-size 0
+    OK-Updated AutoScalingGroup
+```
+Then poll with as-describe-instances as above until there are no instances ready. After the instances have been terminated then you can delete the ASG:
+```shell
+    $ $AWS_AUTO_SCALING_HOME/bin/as-delete-auto-scaling-group -I $ACCOUNT_KEY -S $SECRET_KEY --auto-scaling-group monkey-target
+    
+        Are you sure you want to delete this AutoScalingGroup? [Ny]y
+    OK-Deleted AutoScalingGroup
+```
