@@ -150,7 +150,8 @@ Now Unleash the monkey:
 ```shell
     vi src/main/resources/simianarmy.properties
 ```
-    * set simianarmy.chaos.leashed=false
+
+  * set simianarmy.chaos.leashed=false
 
 Restart the jettyRun and you should see something like:
 ```
