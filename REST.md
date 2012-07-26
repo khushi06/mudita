@@ -1,4 +1,4 @@
-## GET /chaos
+## GET /api/v1/chaos
 
 This will fetch all chaos events in the last 24 hours.  Output is always json.
 
