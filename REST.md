@@ -27,7 +27,7 @@ This will fetch all chaos events in the last 24 hours.  Output is always json.
 </table>
 
 ### Query Parameters
-Any of the above attributes can be passed as query parameters to restrict the query results.  There is an added *since=<ms timestamp>* query parameter to change the time-frame for the interested events.  The default is 24 hours.
+Any of the above attributes can be passed as query parameters to restrict the query results.  There is an added *since=&lt;ms timestamp&gt;* query parameter to change the time-frame for the interested events.  The default is 24 hours.
 
     $ curl 'http://localhost:8080/api/v1/chaos?groupName=simianarmy&since=1343113200000'
     [   
