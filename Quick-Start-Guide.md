@@ -1,34 +1,34 @@
 ## Setup Auto Scaling Group
 First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have nothing to attack.
 
-### Get Tools
+### Get Auto Scaling Tools
 ```shell
     $ wget http://ec2-downloads.s3.amazonaws.com/AutoScaling-2011-01-01.zip
     $ unzip AutoScaling-2011-01-01.zip
     $ cd AutoScaling-1.0.61.0/
     $ export AWS_AUTO_SCALING_HOME=`pwd` 
 ```
-### Setup Env
+### Setup Environment
 ```shell
     $ export AWS_AUTO_SCALING_URL=http://autoscaling.us-west-2.amazonaws.com
     $ export ACCOUNT_KEY=your_account_key
     $ export SECRET_KEY=your_secret_key
 ```
-* *Note:* check your AWS EC2 Management Console to see what regions are available.  This example assumes us-west-2 is being used.
+* **Note:** check your AWS EC2 Management Console to see what regions are available.  This example assumes us-west-2 is being used.
 
 ### Create Launch Config
 ```shell 
     $ $AWS_AUTO_SCALING_HOME/bin/as-create-launch-config lc1 --instance-type t1.micro -I $ACCOUNT_KEY -S $SECRET_KEY --image-id ami-fcf27fcc
     OK-Created launch config
 ```
-* *Note:* ami-fcf27fcc is a public ami which contains "Debian 6.0 Squeeze i386 image".  The contents of the ami are not relevent for this Quick Start.  If you are trying to run these examples for a region other than us-west-2, you will need to find a different ami that is available for your region.  You can find available public amis to test with from the AWS EC2 Management Console.
+* **Note:** ami-fcf27fcc is a public ami which contains "Debian 6.0 Squeeze i386 image".  The contents of the ami are not relevant for this Quick Start.  If you are trying to run these examples for a region other than us-west-2, you will need to find a different ami that is available for your region.  You can find available public amis to test with from the AWS EC2 Management Console.
 
 ### Create Auto Scaling Group
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-create-auto-scaling-group monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --launch-configuration lc1 --availability-zones us-west-2a --min-size 1 --max-size 1
     OK-Created AutoScalingGroup
 ```
-* *Note:*  the availability-zone should be set to a zone available to our account.
+* **Note:**  the availability-zone should be set to a zone available to our account.
 
 ### See Auto Scaling Group running
 ```shell
@@ -36,7 +36,7 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     AUTO-SCALING-GROUP  monkey-target  lc1  us-west-2a  1  1  1
     INSTANCE  i-8b55fbb8  us-west-2a  InService  Healthy  lc1
 ```
-* *Note:* It might take a few minutes before the instance is Health and InService
+* **Note:** It might take a few minutes before the instance is Health and InService
 
 ## Setup SimpleDB Table
 
@@ -62,12 +62,12 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     <?xml version="1.0"?>
     <CreateDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>XXXXXXXX</RequestId><BoxUsage>X.XXXXXXX</BoxUsage></ResponseMetadata></CreateDomainResponse>
     
-    $ sdb ListDomain
+    $ sdb ListDomains
     <?xml version="1.0"?>
     <ListDomainsResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ListDomainsResult><DomainName>SIMIAN_ARMY</DomainName></ListDomainsResult><ResponseMetadata><RequestId>XXXXXXXX</RequestId><BoxUsage>X.XXXXXXXXX</BoxUsage></ResponseMetadata></ListDomainsResponse>
 ```
-* *Note:* If you are not using the us-west-2 region then you will need to change the SimpleDB URI in the above sdb function to correspond to your region.  See [this document](http://docs.amazonwebservices.com/general/latest/gr/rande.html#sdb_region) for SimpleDB Region endpoints.
-* *Note:* The sdb function above is a hack, it sort of works most of the time.  If you know of a better way to create a SimpleDB table, then use it.  [Asgard](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html) allows you to trivially create SimpleDB tables.
+* **Note:** If you are not using the us-west-2 region then you will need to change the SimpleDB URI in the above sdb function to correspond to your region.  See [this document](http://docs.amazonwebservices.com/general/latest/gr/rande.html#sdb_region) for SimpleDB Region endpoints.
+* **Note:** The sdb function above is a hack, it sort of works most of the time.  If you know of a better way to create a SimpleDB table, then use it.  [Asgard](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html) allows you to trivially create SimpleDB tables.
 
 ## Build the Monkeys with Gradle
 * First check out the code from github and then build with gradle
@@ -119,7 +119,7 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     * set simianarmy.chaos.ASG.monkey-target.enabled=true
     * set simianarmy.chaos.ASG.monkey-target.probability=1.0
 
-* *Note:* The simianarmy.chaos.leashed=true setting should still be set, this will run Chaos Monkey in a test-only
+* **Note:** The simianarmy.chaos.leashed=true setting should still be set, this will run Chaos Monkey in a test-only
   mode, no terminations will be done.
 
 * Run the gradle jetty server to start up ChaosMonkey
@@ -128,11 +128,11 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     :compileJava UP-TO-DATE
     :processResources UP-TO-DATE
     :classes UP-TO-DATE
+    :jettyRun
     SLF4J: Class path contains multiple SLF4J bindings.
     SLF4J: Found binding in [jar:file:/Users/cbennett/.gradle/wrapper/dists/gradle-1.0-milestone-9-bin/7ilkmgo2rn79vvfvd51rqf17ks/gradle-1.0-milestone-9/lib/logback-classic-1.0.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
     SLF4J: Found binding in [jar:file:/Users/cbennett/.gradle/caches/artifacts-8/filestore/org.slf4j/slf4j-log4j12/1.6.1/jar/bd245d6746cdd4e6203e976e21d597a46f115802/slf4j-log4j12-1.6.1.jar!/org/slf4j/impl/StaticLoggerBinder.class]
     SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
-    :jettyRun
     2012-07-26 15:43:55.129 - INFO  MonkeyRunner - [MonkeyRunner.java:56] Starting CHAOS Monkey
     2012-07-26 15:43:55.475 - INFO  Monkey - [Monkey.java:107] CHAOS Monkey Running ...
     2012-07-26 15:43:55.689 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:89] Group monkey-target [type ASG] enabled [prob 1.0]
@@ -165,7 +165,7 @@ Restart the jettyRun and you should see something like:
     AUTO-SCALING-GROUP  monkey-target  lc1  us-west-2a  1  1  1
     INSTANCE  i-0951ff3a  us-west-2a  InService  Healthy  lc1
 ```
-* *Note:* It took several minutes for the above command to report a change for me.  To get a more current view you can look at your Instances in the AWS EC2 Management Console.
+* **Note:** It took several minutes for the above command to report a change for me.  To get a more current view you can look at your Instances in the AWS EC2 Management Console.
 
 With the jettyRun still running, you can test the API in a different shell:
 ```shell
@@ -177,10 +177,10 @@ If you restart jettyRun again it will not start Chaos Monkey immediately, it wil
 ```
 2012-07-26 16:15:18.156 - INFO  BasicScheduler - [BasicScheduler.java:101] Detected previous events within cycle, setting CHAOS start to Thu Jul 26 17:08:25 PDT 2012
 ```
-This is to prevent there case where the server is quickly restarted after a previous run, we dont want to let Chaos Monkey kill too much too rapidly.
+This is to prevent there case where the server is quickly restarted after a previous run, we don't want to let Chaos Monkey kill too much too rapidly.
 
 ## Cleanup
-If you dont plan to run Chaos Monkey again for a while, you can delete the SimpleDB table with:
+If you don't plan to run Chaos Monkey again for a while, you can delete the SimpleDB table with:
 ```shell
     $ sdb DeleteDomain SIMIAN_ARMY
 ```
@@ -190,7 +190,7 @@ Then you can get rid of the monkey-target test ASG.  The first step is to reduce
     $ $AWS_AUTO_SCALING_HOME/bin/as-update-auto-scaling-group --name monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --min-size 0 --max-size 0
     OK-Updated AutoScalingGroup
 ```
-Then poll with as-describe-instances as above until there are no instances ready. After the instances have been terminated then you can delete the ASG:
+Then poll with **as-describe-auto-scaling-groups** as above until there are no instances ready. After the instances have been terminated then you can delete the ASG:
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-delete-auto-scaling-group -I $ACCOUNT_KEY -S $SECRET_KEY --auto-scaling-group monkey-target
     
