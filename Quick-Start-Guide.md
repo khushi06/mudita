@@ -124,7 +124,7 @@ Now use the sdb function to create the necessary SIMIAN_ARMY domain
     * set simianarmy.chaos.ASG.monkey-target.probability=1.0
 
 * **Note:** The simianarmy.chaos.leashed=true setting should still be set, this will run Chaos Monkey in a test-only
-  mode, no terminations will be done.
+  mode, no terminations will be done.  To see what the configuration options mean you can check out [Configuration](Configuration).
 
 * Run the gradle jetty server to start up ChaosMonkey
 ```shell
