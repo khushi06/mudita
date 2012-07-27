@@ -14,14 +14,14 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     $ export ACCOUNT_KEY=your_account_key
     $ export SECRET_KEY=your_secret_key
 ```
-* **Note:** check your AWS EC2 Management Console to see what regions are available.  This example assumes us-west-2 is being used.
+* **Note:** This example assumes us-west-2 region is being used.
 
 ### Create Launch Config
 ```shell 
     $ $AWS_AUTO_SCALING_HOME/bin/as-create-launch-config lc1 --instance-type t1.micro -I $ACCOUNT_KEY -S $SECRET_KEY --image-id ami-fcf27fcc
     OK-Created launch config
 ```
-* **Note:** ami-fcf27fcc is a public ami which contains "Debian 6.0 Squeeze i386 image".  The contents of the ami are not relevant for this Quick Start.  If you are trying to run these examples for a region other than us-west-2, you will need to find a different ami that is available for your region.  You can find available public amis to test with from the AWS EC2 Management Console.
+* **Note:** ami-fcf27fcc is a public ami which contains "Debian 6.0 Squeeze i386 image".  The contents of the ami are not relevant for this Quick Start.  If you are trying to run these examples for a region other than us-west-2, you will need to find a different ami that is available for the region of your choice.  You can find available public amis to test with from the AWS EC2 Management Console.
 
 ### Create Auto Scaling Group
 ```shell
@@ -41,6 +41,7 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
 ## Setup SimpleDB Table
 
 ### Create SIMIAN_ARMY SimpleDB Table
+There does not appear to be a simple free toolset offered by Amazon for SimpleDB interaction.  Here is a shell function that does most of what is needed for our setup.  For some reason the signature generation does not seem to work reliably, so if you get an error from the SimpleDB service, try it a few times.
 ```shell
     $ sdb() {
         case $(uname -s) in
@@ -58,6 +59,9 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
         hash=$(echo -ne $payload | openssl dgst -sha256 -hmac "$SECRET_KEY" -binary | base64)
         curl "https://sdb.us-west-2.amazonaws.com/?$params&Signature=$hash"
     }
+```
+Now use the sdb function to create the necessary SIMIAN_ARMY domain
+```shell
     $ sdb CreateDomain SIMIAN_ARMY
     <?xml version="1.0"?>
     <CreateDomainResponse xmlns="http://sdb.amazonaws.com/doc/2009-04-15/"><ResponseMetadata><RequestId>XXXXXXXX</RequestId><BoxUsage>X.XXXXXXX</BoxUsage></ResponseMetadata></CreateDomainResponse>
