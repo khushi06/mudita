@@ -202,3 +202,11 @@ Then poll with **as-describe-auto-scaling-groups** as above until there are no i
         Are you sure you want to delete this AutoScalingGroup? [Ny]y
     OK-Deleted AutoScalingGroup
 ```
+
+Finally delete the *lc1* launch config we created:
+```shell
+    $ $AWS_AUTO_SCALING_HOME/bin/as-delete-launch-config lc1 -I $ACCOUNT_KEY -S $SECRET_KEY
+    
+        Are you sure you want to delete this launch configuration? [Ny]y
+    OK-Deleted launch configuration
+```
