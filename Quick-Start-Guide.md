@@ -174,7 +174,7 @@ Restart the jettyRun and you should see something like:
 With the jettyRun still running, you can test the API in a different shell:
 ```shell
     $ curl http://localhost:8080/simianarmy/api/v1/chaos
-    [{"monkeyType":"CHAOS","eventType":"CHAOS_TERMINATION","eventTime":1343344105651,"region": "us-west-2","groupType":"ASG","groupName":"monkey-target"}]
+    [{"monkeyType":"CHAOS","eventType":"CHAOS_TERMINATION","eventTime":1343344105651,"region":"us-west-2","groupType":"ASG","groupName":"monkey-target"}]
 ```
 
 If you restart jettyRun again it will not start Chaos Monkey immediately, it will see that a CHAOS Event happened within the last hour (Chaos Monkey runs hourly) and delay the next Chaos run.  You will see something like this:
