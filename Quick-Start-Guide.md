@@ -14,6 +14,7 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     $ export ACCOUNT_KEY=your_account_key
     $ export SECRET_KEY=your_secret_key
 ```
+* **Note:** You can find your account key and secret key on your AWS accounts [Security Credentials](https://portal.aws.amazon.com/gp/aws/securityCredentials) page
 * **Note:** This example assumes us-west-2 region is being used.
 
 ### Create Launch Config
