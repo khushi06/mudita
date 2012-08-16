@@ -1,4 +1,3 @@
-
 ### simianarmy.properties
 The system property **simianarmy.properties** specifies the location of the properties file used to configure the monkeys.  The default file is "/simianarmy.properties" located at the root of one of the classpath directories.  See the [defaults in the github repo](https://github.com/Netflix/SimianArmy/blob/master/src/main/resources/simianarmy.properties).
 ```
@@ -114,4 +113,9 @@ This setting allows you to enable or disable a specific ASG by name.  For exampl
 This setting allows you to set a probability for a specific ASG by name.  For example if the ASG name is "monkey-target" to lower the default probability to weekly set **simianarmy.chaos.ASG.monkey-target.probability = 0.2**.  See the comment above on simianarmy.chaos.ASG.probability for further details.
 ```
     simianarmy.chaos.ASG.<asgName>.probability = 1.0
+```
+#### simianarmy.choas.ASG.&lt;asgName&gt;.maxTerminationsPerDay
+This setting allows you to set a value of maximum terminations per day (24 hours) for a specific ASG by name. The number can be a double from 0.001-100.0. 0.001 means that there can be at most 1 termination in 1000 days, 100 means there can be at most 100 terminations in one day. For example, if you want to have at most one termination every week (7 days), you can set this value to 0.14 (roughly 1/7). The default value is 1.0 if you don't set, which means at most there is one termination per day.
+```
+    simianarmy.chaos.ASG.<asgName>.maxTerminationsPerDay = 0.5
 ```
