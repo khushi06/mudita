@@ -92,6 +92,30 @@ This is effectively a "dryrun" option.  If leashed is "false" then it will disco
     simianarmy.chaos.leashed = false
 ```
 
+#### simianarmy.chaos.terminateOndemand.enabled
+This option is used to enable the on-demand termination of chaos monkey. When it is set to true, the chaos monkey will take on-demand termination requests from the REST API. The default value is "false".
+```
+    simianarmy.chaos.terminateOndemand.enabled = false
+```
+
+#### simianarmy.chaos.mandatoryTermination.enabled
+This option is used to enable the mandatory termination of chaos monkey. When it is set to true, the chaos monkey will use a default non-zero probability for instance groups when the groups have been opted in for the last mandatory termination window and there was no terminations in the last mandatory termination window. The default value is "false".
+```
+    simianarmy.chaos.mandatoryTermination.enabled = false
+```
+
+#### simianarmy.chaos.mandatoryTermination.windowInDays
+This option specifies the number of days of the mandatory termination window. This option takes effect only when **simianarmy.chaos.mandatoryTermination.enabled** is true. If the value is not set or has a non-positive value, no mandatory termination will happen. The **simianarmy.chaos.ASG.asgname.lastOptInTimeInMilliseconds** value is also used to decide if a mandatory termination is going to be enforced. If there is no **lastOptInTimeInMilliseconds** for the instance group, no mandatory termination is going to happen.
+```
+    simianarmy.chaos.mandatoryTermination.windowInDays = 32
+```
+
+#### simianarmy.chaos.mandatoryTermination.defaultProbability
+This option specifies the default probability of mandatory termination. This option takes effect only when **simianarmy.chaos.mandatoryTermination.enabled** is true. The default value of this option is 0.5.
+```
+    simianarmy.chaos.mandatoryTermination.defaultProbability = 0.5
+```
+
 #### simianarmy.chaos.ASG.enabled
 The default instance groups shipped in SimianArmy is ASG (Auto Scaling Groups).  This value can be used to change the Opt-In vs Opt-Out behavior.  If this is set to **true** then Chaos Monkey will be configured as Opt-Out, this means that **ALL ASG's will be considered for terminations unless explicitly disabled.**  If this value is set to **false** then Chaos Monkey will be configured as "Opt-In", so all ASGs will not be considered for terminations unless explicitly enabled.  The default is "false".
 ```
@@ -126,4 +150,10 @@ This setting allows you to set a probability for a specific ASG by name.  For ex
 Same as **simianarmy.chaos.ASG.maxTerminationsPerDay**, but setting can be applied to a specific ASG by name.
 ```
     simianarmy.chaos.ASG.<asgName>.maxTerminationsPerDay = 1.0
+```
+
+#### simianarmy.chaos.ASG.&lt;asgName&gt;.lastOptInTimeInMilliseconds
+This value records the last timestamp when the ASG opted in. This value is used in the mandatory termination scenarios.
+```
+    simianarmy.chaos.ASG.<asgName>.lastOptInTimeInMilliseconds = 1234567
 ```
