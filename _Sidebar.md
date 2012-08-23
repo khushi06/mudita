@@ -1,6 +1,6 @@
-[[Home]]
-[[Quick Start Guide]]
-[[Configuration]]
-[[REST]]
-[[Support]]
+* [[Home]]
+* [[Quick Start Guide]]
+* [[Configuration]]
+* [[REST]]
+* [[Support]]
 
