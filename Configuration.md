@@ -1,26 +1,26 @@
 ### simianarmy.properties
-The system property **simianarmy.properties** specifies the location of the properties file used to configure the monkeys.  The default file is "/simianarmy.properties" located at the root of one of the classpath directories.  See the [defaults in the github repo](https://github.com/Netflix/SimianArmy/blob/master/src/main/resources/simianarmy.properties).
+The system property **simianarmy.properties** specifies the location of the properties file used to configure the monkeys.  The default file is "/simianarmy.properties" located at the root of one of the classpath directories.  See the [defaults in the github repo](https://github.com/Netflix/SimianArmy/blob/master/src/main/resources/simianarmy.properties) and the client configuration defaults are [here](https://github.com/Netflix/SimianArmy/blob/master/src/main/resources/client.properties).
 ```
     $ java -Dsimianarmy.properties=/path/to/my/simianarmy.properties ...
 ```
-### AWS Properties
+### AWS Client Properties
 These are the properties needed to access Amazon EC2, Amazon Auto Scaling and Amazon SimpleDB.
  
-#### simianarmy.aws.accountKey
+#### simianarmy.client.aws.accountKey
 The Access Key Id from [AWS Security Credentials](https://portal.aws.amazon.com/gp/aws/securityCredentials).
 ```
-    simianarmy.aws.accountKey = accountKey
+    simianarmy.client.aws.accountKey = accountKey
 ```
-#### simianarmy.aws.secretKey
+#### simianarmy.client.aws.secretKey
 The Secret Access Key Id from [AWS Security Credentials](https://portal.aws.amazon.com/gp/aws/securityCredentials).
 ```
-    simianarmy.aws.secretKey = secretKey
+    simianarmy.client.aws.secretKey = secretKey
 ```
 
-#### simianarmy.aws.region
+#### simianarmy.client.aws.region
 This specifies the Amazon region where the Monkeys will run.  It is expected that if you want to run the monkeys in multiple regions then you will a separate installation of SimianArmy in each region.  The default region is "us-east-1".
 ```
-    simianarmy.aws.region = us-east-1
+    simianarmy.client.aws.region = us-east-1
 ```
 #### simianarmy.sdb.domain
 This property sets the SimpleDB domain where all the monkey events will be stored.  The default is SIMIAN_ARMY.
