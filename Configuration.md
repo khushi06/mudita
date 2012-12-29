@@ -134,9 +134,9 @@ This property allows the Chaos Monkey to run.  The default is "true".  Note that
 ```
 
 #### simianarmy.chaos.leashed
-This is effectively a "dryrun" option.  If leashed is "false" then it will discover instance groups and select instances for termination based on the configured properties, but it will not be able to terminate any instances. The default value is "false".
+This is effectively a "dryrun" option.  If leashed is "true" then it will discover instance groups and select instances for termination based on the configured properties, but it will not be able to terminate any instances. The default value is "true".
 ```
-    simianarmy.chaos.leashed = false
+    simianarmy.chaos.leashed = true
 ```
 
 #### simianarmy.chaos.terminateOndemand.enabled
