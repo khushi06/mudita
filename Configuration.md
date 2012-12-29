@@ -176,7 +176,7 @@ This sets the default probability of termination for all ASGs considered.  This 
 ```
 
 #### simianarmy.chaos.ASG.maxTerminationsPerDay
-This setting allows you to set a value of maximum terminations per day (24 hours) for a specific ASG by name. The number can be a double from 0.001-100.0. 0.001 means that there can be at most 1 termination in 1000 days, 100 means there can be at most 100 terminations in one day. For example, if you want to have at most one termination every week (7 days), you can set this value to 0.143 (approx 1/7). The default value is 1.0 which means at most there is one termination per day.
+This setting allows you to set a value of maximum terminations per calendar day (24 hours) for a specific ASG by name. The number can be a double from 0.001-100.0. 0.001 means that there can be at most 1 termination in 1000 calendar days, 100 means there can be at most 100 terminations in one day. For example, if you want to have at most one termination every week (7 days), you can set this value to 0.143 (approx 1/7). The default value is 1.0 which means at most there is one termination per day.
 ```
     simianarmy.chaos.ASG.maxTerminationsPerDay = 1.0
 ```
