@@ -112,22 +112,42 @@ Now use the sdb function to create the necessary SIMIAN_ARMY domain
     BUILD SUCCESSFUL
     Total time: 43.294 secs
 ```
-* For testing modify the simianarmy.properties file
+* For testing modify the simianarmy.properties and client.properties file
 ```shell
-    vi src/main/resources/simianarmy.properties
+    vi src/main/resources/client.properties
 ```
     * set simianarmy.aws.secretKey
     * set simianarmy.aws.account_key
-    * set simianarmy.aws.region 
+    * set simianarmy.aws.region
+```shell
+    vi src/main/resources/simianarmy.properties
+```
     * set simianarmy.calendar.isMonkeyTime=true (if on weekend or not in 9-3pm)
+
+* For Chaos Monkey, modify chaos.properties file
+```shell
+    vi src/main/resources/chaos.properties
+```
     * set simianarmy.chaos.ASG.enabled=false
     * set simianarmy.chaos.ASG.monkey-target.enabled=true
     * set simianarmy.chaos.ASG.monkey-target.probability=1.0
 
 * **Note:** The simianarmy.chaos.leashed=true setting should still be set, this will run Chaos Monkey in a test-only
-  mode, no terminations will be done.  To see what the configuration options mean you can check out [Configuration](Configuration).
+  mode, no terminations will be done.  To see what the configuration options mean you can check out [Chaos Monkey Configuration](Chaos-Settings).
 
-* Run the gradle jetty server to start up ChaosMonkey
+* For Janitor Monkey, modify janitor.properties file
+```shell
+    vi src/main/resources/janitor.properties
+```
+By default Janitor Monkey is going to run in the test-only mode, no deletions or markings of resources will be done. The monkey looks for cleanup candidates in instances, EBS volumes, EBS snapshots, and auto scaling groups under the AWS account using all available rules. You can see the logs of running in on the console output. To see the Janitor Monkey rules and what the configuration options mean you can check out [Janitor Monkey Configuration](Janitor-Settings).
+
+* For running the volume tagging monkey that is a companion of Janitor Monkey, modify volumeTagging.properties file
+```shell
+    vi src/main/resources/volumeTagging.properties
+```
+To see what the configuration options mean you can check out [Volume Tagging Monkey Configuration](Janitor-Settings).
+
+* Run the gradle jetty server to start up Chaos Monkey, Janitor Monkey, and the Volume Tagging Monkey. Below only shows the output of running Chaos Monkey as example, by default you will also see the running result of Janitor Monkey and Volume Tagging Monkey.
 ```shell
     $ ./gradlew jettyRun
     :compileJava UP-TO-DATE
@@ -151,9 +171,9 @@ Probably after a few restarts you will see:
     2012-07-26 15:49:18.651 - INFO  BasicChaosMonkey - [BasicChaosMonkey.java:94] leashed ChaosMonkey prevented from killing i-0156f832 from group monkey-target [ASG], set simianarmy.chaos.leashed=false
 ```
 
-Now Unleash the monkey:
+Now Unleash the Chaos monkey:
 ```shell
-    vi src/main/resources/simianarmy.properties
+    vi src/main/resources/chaos.properties
 ```
 
   * set simianarmy.chaos.leashed=false

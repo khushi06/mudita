@@ -48,3 +48,16 @@ Any of the above attributes can be passed as query parameters to restrict the qu
             "instanceId": "i-06cae07e"
        }
     ]
+
+## POST /api/v1/janitor
+
+This will add a new Janitor Monkey event. The main purpose is to flag a resource as not being cleaned by Janitor Monkey (opt out the resource) or to remove such flag (opt in the resource). Input is in Json format.
+
+To flag a resource as not being cleaned by Janitor Monkey:
+    
+    $ curl http://localhost:8080/simianarmy/api/v1/janitor -d '{"eventType":"OPTOUT","resourceId":"foo"}'
+
+To opt in the resource so it can be managed by Janitor Mokey again.
+    
+    $ curl http://localhost:8080/simianarmy/api/v1/janitor -d '{"eventType":"OPTIN","resourceId":"foo"}'
+
