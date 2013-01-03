@@ -141,7 +141,7 @@ Now use the sdb function to create the necessary SIMIAN_ARMY domain
 ```
 By default Janitor Monkey is going to run in the test-only mode, no deletions or markings of resources will be done. The monkey looks for cleanup candidates in instances, EBS volumes, EBS snapshots, and auto scaling groups under the AWS account using all available rules. You can see the logs of running in on the console output. To see the Janitor Monkey rules and what the configuration options mean you can check out [Janitor Monkey Configuration](Janitor-Settings).
 
-* For running the volume tagging monkey that is a companion of Janitor Monkey, modify volumeTagging.properties file
+* For running the volume tagging monkey that is used to tag volumes with attachment information, modify volumeTagging.properties file
 ```shell
     vi src/main/resources/volumeTagging.properties
 ```
