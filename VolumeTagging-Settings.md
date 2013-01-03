@@ -1,5 +1,5 @@
 ### Volume Tagging Monkey Properties
-With these properties you can control how volume tagging monkey operates. The monkey is a companion of Janitor Monkey for tagging EBS volumes with attachment information which Janitor Monkey can use cleaning up volumes.
+With these properties you can control how volume tagging monkey operates. The monkey is a companion of Janitor Monkey for tagging EBS volumes with attachment information which Janitor Monkey can use for cleaning up unused volumes.
 
 #### simianarmy.volumeTagging.enabled
 This property allows the Volume Tagging Monkey to run. The default is "true". Note that an enabled Volume Tagging Monkey does not mean it is also allowed to tag volumes. It must also have the leashed property set to "false".
