@@ -145,7 +145,7 @@ By default Janitor Monkey is going to run in the test-only mode, no deletions or
 ```shell
     vi src/main/resources/volumeTagging.properties
 ```
-To see what the configuration options mean you can check out [Volume Tagging Monkey Configuration](Janitor-Settings).
+To see what the configuration options mean you can check out [Volume Tagging Monkey Configuration](VolumeTagging-Settings).
 
 * Run the gradle jetty server to start up Chaos Monkey, Janitor Monkey, and the Volume Tagging Monkey. Below only shows the output of running Chaos Monkey as example, by default you will also see the running result of Janitor Monkey and Volume Tagging Monkey.
 ```shell
