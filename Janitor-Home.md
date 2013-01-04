@@ -10,7 +10,7 @@ Since there can always be exceptions when you want to keep an unused resource lo
 
 One of the great advantages of moving from a private datacenter into the cloud is that you have quick and easy access to nearly limitless new resources.  To push out a new application release you can quickly build up a new cluster, or when you need more disk just attach a new volume, to backup your data just make a snapshot, to test out a new idea just create new instances and get to work.  The downside of this flexbility is that it is pretty easy to lose track of the cloud resources that are no longer needed.  Perhaps you forgot to delete the cluster with the previous version of your application, or forgot to destroy the volume when you no longer needed the extra disk.  Taking snapshots is great for backups, but do you really need those from 12 months ago?  It's not just forgetfulness that can cause problems, for example network errors can cause your request to delete an unused volume to get lost. 
 
-Oftentimes there are unused resources costing cloud users money, and we needed a solution to rectify this problem. Diligent engineers can manualy delete unused resources manually but we need a way to automatically detect and clean them up. The solution is Janitor Monkey.
+Oftentimes there are unused resources costing cloud users money, and we needed a solution to rectify this problem. Diligent engineers can manually delete unused resources but we need a way to automatically detect and clean them up. The solution is Janitor Monkey.
 
 ##  How Janitor Monkey Cleans
 
