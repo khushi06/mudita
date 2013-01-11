@@ -18,11 +18,18 @@ The Access Key Id from [AWS Security Credentials](https://portal.aws.amazon.com/
 ```
     simianarmy.client.aws.accountKey = accountKey
 ```
+
+If left empty, the AWS SDK will attempt to receive the accountKey from a Environment variable, a Java System property or the Meta data service in case the policy has been set as an Instance Role.
+See [AWS Roles in Java](http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-roles.html) for more details.
+
 #### simianarmy.client.aws.secretKey
 The Secret Access Key Id from [AWS Security Credentials](https://portal.aws.amazon.com/gp/aws/securityCredentials).
 ```
     simianarmy.client.aws.secretKey = secretKey
 ```
+
+Same as the accountKey the secretKey can also be left empty or blank such that it can be received through the AWS SDK.
+
 #### simianarmy.client.aws.region
 This specifies the Amazon region where the Monkeys will run.  It is expected that if you want to run the monkeys in multiple regions then you will a separate installation of SimianArmy in each region.  The default region is "us-east-1".
 ```
