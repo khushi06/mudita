@@ -39,6 +39,56 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
 ```
 * **Note:** It might take a few minutes before the instance is Health and InService
 
+## Setup User or Role policies
+Monkeys within the SimianArmy require permissions to a set of actions. The easiest start is to just set up a user for the monkey that has full permissions for ASG, EC2, SDB and SES, simpler still would be setting up one having full access. However you can of course use a more fine grained policy on the SimianArmy user, please see an example below:
+```
+{
+  "Statement": [
+    {
+      "Sid": "Stmt1357739573947",
+      "Action": [
+        "ec2:CreateTags",
+        "ec2:DeleteSnapshot",
+        "ec2:DescribeImages",
+        "ec2:DescribeInstances",
+        "ec2:DescribeSnapshots",
+        "ec2:DescribeVolumes",
+        "ec2:TerminateInstances"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Sid": "Stmt1357739649609",
+      "Action": [
+        "autoscaling:DeleteAutoScalingGroup",
+        "autoscaling:DescribeAutoScalingGroups",
+        "autoscaling:DescribeAutoScalingInstances",
+        "autoscaling:DescribeLaunchConfigurations"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Sid": "Stmt1357739730279",
+      "Action": [
+        "sdb:BatchDeleteAttributes",
+        "sdb:BatchPutAttributes",
+        "sdb:DomainMetadata",
+        "sdb:GetAttributes",
+        "sdb:PutAttributes",
+        "sdb:Select"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+```
+### Permissions through Instance Roles
+
+If you prefer using Instance Roles to set your access policy, you can do so by leaving the simianarmy.client.aws.accountKey and simianarmy.client.aws.secretKey blank or removing the property entirely. More details are seen in [[Client Settings]] and the [AWS User guide on Instance role policies](http://docs.amazonwebservices.com/IAM/latest/UserGuide/role-usecase-ec2app.html).
+
 ## Setup SimpleDB Table
 
 ### Create SIMIAN_ARMY SimpleDB Table
