@@ -62,9 +62,9 @@ simianarmy.janitor.notification.daysBeforeTermination = 2
 ```
 
 #### simianarmy.janitor.enabledResources
-This property specifies the resource types that Janitor Monkey manages. Currently Janitor Monkey can clean up instances, auto scaling groups, EBS volumes, and EBS snapshots. By default all these resource types are enabled for Janitor Monkey to manage.
+This property specifies the resource types that Janitor Monkey manages. Currently Janitor Monkey can clean up instances, auto scaling groups, EBS volumes, EBS snapshots, launch configurations, and images. By default all these resource types are enabled for Janitor Monkey to manage.
 ```
-simianarmy.janitor.enabledResources =  Instance, ASG, EBS_Volume, EBS_Snapshot
+simianarmy.janitor.enabledResources =  Instance, ASG, EBS_Volume, EBS_Snapshot, Launch_Config, Image
 ```
 ### Setting rule of cleaning up instances not in auto scaling group
 The properties below are used to configure the rule used to clean up orphaned instances that are not in any auto scaling group.
@@ -182,3 +182,95 @@ This property specifies the number of business days the auto scaling group is re
 simianarmy.janitor.rule.suspendedASGRule.retentionDays = 5
 ```
 
+### Setting rule of cleaning up launch configurations
+The following properties are used by the Janitor rule for cleaning up launch configurations that are not used by any auto scaling group or instances and are older than certain days.
+
+#### simianarmy.janitor.rule.oldUnusedLaunchConfigRule.enabled
+This property specifies whether Janitor monkey will clean up unused launch configurations that are more than certain days old. You can set the property to false to disable the rule. The default value is true.
+```
+simianarmy.janitor.rule.oldUnusedLaunchConfigRule.enabled = true
+```
+
+#### simianarmy.janitor.rule.oldUnusedLaunchConfigRule.ageThreshold
+An unused launch configuration is considered a cleanup candidate when it is older than the number of days
+specified in the property below. The default value is 4.
+```
+simianarmy.janitor.rule.oldUnusedLaunchConfigRule.ageThreshold = 4
+```
+
+#### simianarmy.janitor.rule.oldUnusedLaunchConfigRule.retentionDays
+This property specifies the number of business days the launch configuration is kept after a notification is sent for the termination. The default value is 3.
+```
+simianarmy.janitor.rule.oldUnusedLaunchConfigRule.retentionDays = 3
+```
+
+### Setting rule of cleaning up images
+The following properties are used by the Janitor rule for cleaning up images.
+
+#### simianarmy.janitor.image.crawler.lookBackDays
+The property below specifies the number of days to look back in the history when crawling the last reference information of the images. By default we look back up to 60 days.
+```
+simianarmy.janitor.image.crawler.lookBackDays = 60
+```
+
+#### simianarmy.janitor.image.ownerId
+The property below specifies the owner id that images have for being managed by Janitor Monkey. If no owner id is set, all images under the AWS account are returned. By default the line is commented and no owner id is set.
+```
+#simianarmy.janitor.image.ownerId = 1234567890
+```
+
+#### simianarmy.janitor.rule.unusedImageRule.enabled
+This rule is used by the Janitor rule for cleaning up images that have not been used by any instances and launch configurations, and and not used to create other images, in the last certain days. This rule is by default disabled, you need to have Edda running and enabled for using this rule since the image's history is needed to determine the last time when the images was referenced.
+```
+simianarmy.janitor.rule.unusedImageRule.enabled = false
+```
+
+#### simianarmy.janitor.rule.unusedImageRule.lastReferenceDaysThreshold
+An unused image is considered a cleanup candidate when it is not referenced for than the number of days
+specified in the property below. The default value is 45.
+```
+simianarmy.janitor.rule.unusedImageRule.lastReferenceDaysThreshold = 45
+```
+
+#### simianarmy.janitor.rule.unusedImageRule.retentionDays
+The property below specifies the number of business days the image is kept after a notification is sent for the termination. The default value is 3.
+```
+simianarmy.janitor.rule.unusedImageRule.retentionDays = 3
+```
+
+#### Configure Edda for Janitor Monkey
+The following properties are used to configure Edda for Janitor Monkey to get the history of resources.
+
+#### simianarmy.janitor.edda.enabled
+The property specifies whether Edda is enabled and started. By default Edda is not enabled.
+```
+simianarmy.janitor.edda.enabled = false
+```
+
+#### simianarmy.janitor.edda.endpoint.\<region\>
+
+The property specifies the Edda endpoint in each region.
+```
+#simianarmy.janitor.edda.endpoint.us-east-1 = http://localhost:8080
+```
+
+#### Configure the Edda client.
+The properties below are used to configure the Edda REST client.
+
+#### simianarmy.janitor.edda.client.timeout
+The property specifies the timeout value (in miliseconds) of RESTful request to Edda. The default value is 30 seconds.
+```
+simianarmy.janitor.edda.client.timeout = 30000
+```
+
+#### simianarmy.janitor.edda.client.retries
+The property specifies the number of retries for each request. The default value is 3.
+```
+simianarmy.janitor.edda.client.retries = 3
+```
+
+#### simianarmy.janitor.edda.client.retryInterval
+The property specifies the time interval (in miliseconds) between retry of requests. The default value is 1 second.
+```
+simianarmy.janitor.edda.client.retryInterval = 1000
+```
