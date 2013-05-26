@@ -13,4 +13,4 @@ The system property **simianarmy.properties** specifies the location of the prop
 **client.properties** configures the client to be used. Currently AWS and VSphere are supported. Example configuration file can be seen [here](Client-Settings).
 
 ## Customizing specific monkeys
-You can also learn how to [Configure Chaos Monkey](Chaos-Settings) and [Configure Janitor Monkey](Janitor-Settings) so you can customize the monkeys to fit your business needs.
+You can also learn how to [Configure Chaos Monkey](Chaos-Settings), [Configure Janitor Monkey](Janitor-Settings), and [Configure Conformity Monkey](Conformity-Settings) so you can customize the monkeys to fit your business needs.
