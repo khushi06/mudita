@@ -27,7 +27,7 @@ simianarmy.calendar.isMonkeyTime = false
 ```
 
 
-The properties below allow you to customize whether conformity monkey sends notifications for failing clusters every hour or only within a specific time window.
+The properties below allow you to customize whether conformity monkey sends notifications for unconforming clusters every hour or only within a specific time window.
 Conformity monkey sends notifications to the owner of unconforming clusters between the open hour and close
 hour only. In other hours, only summary email is sent. The default setting is to always send email notifications
 after each run.
@@ -86,8 +86,8 @@ simianarmy.conformity.rule.SameZonesInElbAndAsg.enabled = true
 ```
 
 #### simianarmy.conformity.rule.InstanceInSecurityGroup.enabled
-# This property is used to enable the conformity rule to check whether all instances in a cluster
-# are in required security groups.
+This property is used to enable the conformity rule to check whether all instances in a cluster
+are in required security groups.
 ```
 simianarmy.conformity.rule.InstanceInSecurityGroup.enabled = true
 ```
