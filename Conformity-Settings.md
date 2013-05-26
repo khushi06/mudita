@@ -39,9 +39,9 @@ simianarmy.conformity.notification.closeHour = 24
 
 #### simianarmy.conformity.leashed
 This is effectively a "dryrun" option.  If leashed is "true" then it will performs conformity checks for all clusters, but it will not be able to save data to DB or send notifications.
-The default value is "false".
+The default value is "true".
 ```
-simianarmy.conformity.leashed = false
+simianarmy.conformity.leashed = true
 ```
 
 #### simianarmy.conformity.resources.sdb.domain

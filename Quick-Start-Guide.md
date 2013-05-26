@@ -191,13 +191,21 @@ Now use the sdb function to create the necessary SIMIAN_ARMY domain
 ```
 By default Janitor Monkey is going to run in the test-only mode, no deletions or markings of resources will be done. The monkey looks for cleanup candidates in instances, EBS volumes, EBS snapshots, and auto scaling groups under the AWS account using all available rules. You can see the logs of running in on the console output. To see the Janitor Monkey rules and what the configuration options mean you can check out [Janitor Monkey Configuration](Janitor-Settings).
 
+* For Conformity Monkey, modify conformity.properties file
+```shell
+    vi src/main/resources/conformity.properties
+```
+By default Conformity Monkey is going to run in the dryrun mode, no data is saved to DB and not email notification about unconforming clusters is sent to the cluster owners.
+It does perform conformity checks and you can see the logs of running in on the console output. To see the Conformity Monkey rules and what the configuration options mean you
+can check out [Conformity Monkey Configuration](Conformity-Settings).
+
 * For running the volume tagging monkey that is used to tag volumes with attachment information, modify volumeTagging.properties file
 ```shell
     vi src/main/resources/volumeTagging.properties
 ```
 To see what the configuration options mean you can check out [Volume Tagging Monkey Configuration](VolumeTagging-Settings).
 
-* Run the gradle jetty server to start up Chaos Monkey, Janitor Monkey, and the Volume Tagging Monkey. Below only shows the output of running Chaos Monkey as example, by default you will also see the running result of Janitor Monkey and Volume Tagging Monkey.
+* Run the gradle jetty server to start up Chaos Monkey, Janitor Monkey, Conformity Monkey, and the Volume Tagging Monkey. Below only shows the output of running Chaos Monkey as example, by default you will also see the running result of other monkeys.
 ```shell
     $ ./gradlew jettyRun
     :compileJava UP-TO-DATE
