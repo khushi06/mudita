@@ -136,25 +136,24 @@ Eureka is enabled also.
 simianarmy.conformity.rule.InstanceIsHealthyInEureka.enabled = true
 ```
 
-#### simianarmy.conformity.cluster.<name>.ownerEmail
+#### simianarmy.conformity.cluster.name.ownerEmail
 You can override a cluster's owner email by providing a property here. For example, the line below overrides
 the owner email of cluster foo to foo@bar.com
 ```
 simianarmy.conformity.cluster.foo.ownerEmail = foo@bar.com
 ```
 
-#### simianarmy.conformity.cluster.<name>.excludedRules
+#### simianarmy.conformity.cluster.name.excludedRules
 You can exclude specific conformity rules for a cluster using this property. For example, the line below excludes
 the conformity rule rule1 and rule2 on cluster foo.
 ```
 simianarmy.conformity.cluster.foo.excludedRules = rule1,rule2
 ```
 
-#### simianarmy.conformity.cluster.<name>.optedOut
+#### simianarmy.conformity.cluster.name.optedOut
 You can opt out a cluster completely from Conformity Monkey by using this property. After a cluster is opted out,
 no notification is sent for it no matter it is conforming or not. For example, the line below opts out the cluster
 foo.
 ```
 simianarmy.conformity.cluster.foo.optedOut = true
 ```
-
