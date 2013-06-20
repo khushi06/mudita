@@ -29,7 +29,7 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     $ $AWS_AUTO_SCALING_HOME/bin/as-create-auto-scaling-group monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --launch-configuration lc1 --availability-zones us-west-2a --min-size 1 --max-size 1
     OK-Created AutoScalingGroup
 ```
-* **Note:**  the availability-zone should be set to a zone available to our account.
+* **Note:**  the availability-zone should be set to a zone available to your account.
 
 ### See Auto Scaling Group running
 ```shell
@@ -37,7 +37,7 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
     AUTO-SCALING-GROUP  monkey-target  lc1  us-west-2a  1  1  1
     INSTANCE  i-8b55fbb8  us-west-2a  InService  Healthy  lc1
 ```
-* **Note:** It might take a few minutes before the instance is Health and InService
+* **Note:** It might take a few minutes before the instance is Healthy and InService
 
 ## Setup User or Role policies
 Monkeys within the SimianArmy require permissions to a set of actions. The easiest start is to just set up a user for the monkey that has full permissions for ASG, EC2, SDB and SES, simpler still would be setting up one having full access. However you can of course use a more fine grained policy on the SimianArmy user, please see an example below:
