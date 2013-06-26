@@ -57,7 +57,7 @@ To flag a resource as not being cleaned by Janitor Monkey:
     
     $ curl http://localhost:8080/simianarmy/api/v1/janitor -d '{"eventType":"OPTOUT","resourceId":"foo"}'
 
-To opt in the resource so it can be managed by Janitor Mokey again.
+To opt in the resource so it can be managed by Janitor Monkey again.
     
     $ curl http://localhost:8080/simianarmy/api/v1/janitor -d '{"eventType":"OPTIN","resourceId":"foo"}'
 
