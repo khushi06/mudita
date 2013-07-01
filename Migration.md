@@ -20,7 +20,7 @@ moved to file client.properties and were renamed (added .client prefix) in versi
 ```
 
 ## Version 2.3 -> 2.4
-After introducing Janitor Monkey in version 2.4, we re-structured the configuration files. Mokey specific settings are now in its own file. For Chaos Monkey it is **chaos.properties**, and for Janitor Monkey it is **janitor.properties**.
+After introducing Janitor Monkey in version 2.4, we re-structured the configuration files. Monkey specific settings are now in their own file. For Chaos Monkey it is **chaos.properties**, and for Janitor Monkey it is **janitor.properties**.
 
 The property to specify the SimpleDB domain for storing the monkey events is now changed. Previously it was
 ```
