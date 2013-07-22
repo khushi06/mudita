@@ -155,3 +155,9 @@ foo.
 ```
 simianarmy.conformity.cluster.foo.optedOut = true
 ```
+
+#### simianarmy.conformity.cluster.SoloInstances.optedOut
+The 'SoloInstances' cluster is a specific cluster containing all the instances that you own that are not part of an auto-scaling group. Currently the only conformity check applied to these instances is the 'InstanceInVPC' rule, however others can be modified to work against this cluster. If you wish to opt out add this property.
+```
+simianarmy.conformity.cluster.SoloInstances.optedOut = true
+```
