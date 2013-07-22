@@ -112,6 +112,12 @@ old than this number of days is consider nonconforming.
 simianarmy.conformity.rule.InstanceTooOld.instanceAgeThreshold = 180
 ```
 
+#### simianarmy.conformity.rule.InstanceInVPC.enabled
+This property is used to enable the conformity rule to check whether your instances are in an Amazon Virtual Private Cloud (VPC). 
+```
+simianarmy.conformity.rule.InstanceInVPC.enabled = true
+```
+
 #### simianarmy.conformity.rule.InstanceHasStatusUrl.enabled
 This property is used to enable the conformity rule to check whether all instances in the cluster
 have a status url defined in Discovery/Eureka. The rule is added to Conformity Monkey only when
@@ -126,14 +132,6 @@ have a health check url defined in Discovery/Eureka. The rule is added to Confor
 Eureka is enabled also.
 ```
 simianarmy.conformity.rule.InstanceHasHealthCheckUrl.enabled = true
-```
-
-#### simianarmy.conformity.rule.InstanceIsHealthyInEureka.enabled
-This property is used to enable the conformity rule to check whether there are unhealthy instances
-in the cluster in Discovery/Eureka. The rule is added to Conformity Monkey only when
-Eureka is enabled also.
-```
-simianarmy.conformity.rule.InstanceIsHealthyInEureka.enabled = true
 ```
 
 #### simianarmy.conformity.cluster.name.ownerEmail
