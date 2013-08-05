@@ -74,9 +74,23 @@ Same as **simianarmy.chaos.ASG.maxTerminationsPerDay**, but setting can be appli
 ```
 
 #### simianarmy.chaos.ASG.&lt;asgName&gt;.lastOptInTimeInMilliseconds
-This value records the last timestamp when the ASG opted in. This value is used in the mandatory termination scenarios.
+This value records the last timestamp when the ASG opted in. This value 
+is used in the mandatory termination scenarios.
 ```
     simianarmy.chaos.ASG.<asgName>.lastOptInTimeInMilliseconds = 1234567
+```
+ 
+#### simianarmy.chaos.ASG.&lt;groupName&gt;.ownerEmail
+Set the destination email that the termination notifications will be 
+sent to for a specific ASG's instances
+```
+simianarmy.chaos.ASG.<asgName>.ownerEmail = the.owner@email.com
+```
+
+#### simianarmy.chaos.notification.sourceEmail
+Set the source email that sends the termination notifications
+```
+simianarmy.chaos.notification.sourceEmail = from.someone@email.com
 ```
 
 #### simianarmy.chaos.ASG.&lt;asgName&gt;.notification.enabled
