@@ -95,6 +95,6 @@ simianarmy.chaos.notification.global.enabled = true
 #### simianarmy.chaos.notification.global.receiverEmail
 The recipient email address for notifications instance terminations in all ASGs
 ```
-simianarmy.chaos.notification.global.receiverEmail = test@email.com
+simianarmy.chaos.notification.global.receiverEmail = john.recipient@email.com
 ```
 
