@@ -78,3 +78,23 @@ This value records the last timestamp when the ASG opted in. This value is used 
 ```
     simianarmy.chaos.ASG.<asgName>.lastOptInTimeInMilliseconds = 1234567
 ```
+
+#### simianarmy.chaos.ASG.&lt;asgName&gt;.notification.enabled
+Enables ASG specific email notifications about instance terminations. Only terminations of instances within the ASG &lt;asgName&gt; will be notified. 
+```
+simianarmy.chaos.ASG.<asgName>.notification.enabled = true
+```
+
+#### simianarmy.chaos.notification.global.enabled
+Enables email notifications about terminations of instances within all ASGs. Email notifications will be sent to the address specified by the value of the simianarmy.chaos.notification.global.receiverEmail 
+property
+```
+simianarmy.chaos.notification.global.enabled = true
+```
+
+#### simianarmy.chaos.notification.global.receiverEmail
+The recipient email address for notifications instance terminations in all ASGs
+```
+simianarmy.chaos.notification.global.receiverEmail = test@email.com
+```
+
