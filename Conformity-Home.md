@@ -2,7 +2,7 @@
 
 Conformity Monkey is a service which runs in the Amazon Web Services (AWS) cloud looking for instances that are not conforming to predefined
 rules for the best practices. The design of Conformity Monkey is flexible enough to allow extending it to work with other cloud providers
-and cloud resources. By default, conformity check is performed every hour. The schedule can be easily re-configured to fit your business' need.
+and cloud resources. By default, conformity checking is performed every hour. The schedule can be easily re-configured to fit your business' need.
 
 Conformity Monkey determines whether an instance is nonconforming by applying a set of rules on it. If any of the rules determines that the
 instance is not conforming, the monkey sends an email notification to the owner of the instance. We provide a collection of conformity rules
