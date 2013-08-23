@@ -112,3 +112,37 @@ The recipient email address for notifications instance terminations in all ASGs
 simianarmy.chaos.notification.global.receiverEmail = john.recipient@email.com
 ```
 
+#### simianarmy.chaos.notification.subject.prefix
+Set a prefix applied to the subject of all termination notifications.  
+Probably want to include a trailing space to separate from start of default text.
+```
+simianarmy.chaos.notification.subject.prefix = SubjectPrefix 
+```
+
+#### simianarmy.chaos.notification.subject.suffix
+Set a suffix applied to the subject of all termination notifications.  
+Probably want to include an escaped space " \ " to separate from end of default text
+```
+simianarmy.chaos.notification.subject.suffix = \ SubjectSuffix
+```
+
+#### simianarmy.chaos.notification.body.prefix
+Set a prefix applied to the body of all termination notifications.  
+Probably want to include a trailing space to separate from start of default text
+```
+simianarmy.chaos.notification.body.prefix = BodyPrefix 
+```
+
+#### simianarmy.chaos.notification.body.suffix
+Set a suffix applied to the body of all termination notifications.  
+Probably want to include an escaped space " \ " to separate from end of default text
+```
+simianarmy.chaos.notification.body.suffix = \ BodySuffix
+```
+
+#### simianarmy.chaos.notification.subject.isBody
+Enable the email subject to be the same as the body, to include terminated instance and group information
+```
+simianarmy.chaos.notification.subject.isBody = true
+```
+
