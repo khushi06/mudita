@@ -35,6 +35,14 @@ This specifies the Amazon region where the Monkeys will run.  It is expected tha
 ```
     simianarmy.client.aws.region = us-east-1
 ```
+#### simianarmy.client.aws.assumeRoleArn
+If the Monkeys are to run under an assumed role, this will be the ARN of the role to be assumed.
+All actions will be performed under this assumed role. There is some additional set up required within AWS (the sts:AssumeRole action must be allowed on this role), see [AssumeRole API](http://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) for more details
+
+```
+   simianarmy.client.aws.assumeRoleArn = arn:aws:iam::ACCOUNT:role/ROLE
+```
+
 ### VSpehere Client Properties
 When using the VSphere Client, the client has to be configured with the following VSphere Client specific properties. As stated above, in addition the aws client properties to access the Amazon SimpleDB also have to be correctly configured.
 
