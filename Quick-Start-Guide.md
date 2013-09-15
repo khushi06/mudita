@@ -2,13 +2,34 @@
 First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have nothing to attack.
 
 ### Get Auto Scaling Tools
+
+You can use the new AWS CLI tools:
+```shell
+    $ sudo pip install awscli
+```
+
+If you prefer to use the old tools:
 ```shell
     $ wget http://ec2-downloads.s3.amazonaws.com/AutoScaling-2011-01-01.zip
     $ unzip AutoScaling-2011-01-01.zip
     $ cd AutoScaling-1.0.61.0/
     $ export AWS_AUTO_SCALING_HOME=`pwd` 
 ```
+
+Instructions for both are provided.
+
 ### Setup Environment
+
+If using the new CLI tools, edit ~/.aws/config:
+
+```
+[default]
+aws_access_key_id = your_acount_key
+aws_secret_access_key = your_secret_key
+region = us-west-2
+```
+
+If using the old CLI:
 ```shell
     $ export AWS_AUTO_SCALING_URL=http://autoscaling.us-west-2.amazonaws.com
     $ export ACCOUNT_KEY=your_account_key
@@ -18,13 +39,28 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
 * **Note:** This example assumes us-west-2 region is being used.
 
 ### Create Launch Config
+Using the new CLI:
+```shell
+aws autoscaling create-launch-configuration --launch-configuration-name lc1 --instance-type t1.micro --image-id ami-fcf27fcc --key-name <keyname>
+```
+
+--keyname <keyname> is optional, but recommended if you want to SSH into your instances.
+
+Using the old CLI:
 ```shell 
     $ $AWS_AUTO_SCALING_HOME/bin/as-create-launch-config lc1 --instance-type t1.micro -I $ACCOUNT_KEY -S $SECRET_KEY --image-id ami-fcf27fcc
     OK-Created launch config
 ```
+
 * **Note:** ami-fcf27fcc is a public ami which contains "Debian 6.0 Squeeze i386 image".  The contents of the ami are not relevant for this Quick Start.  If you are trying to run these examples for a region other than us-west-2, you will need to find a different ami that is available for the region of your choice.  You can find available public amis to test with from the AWS EC2 Management Console.
 
 ### Create Auto Scaling Group
+Using the new CLI:
+```shell
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name monkey-target --launch-configuration-name lc1 --availability-zones us-west-2a --min-size 1 --max-size 1
+```
+
+Using the old CLI:
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-create-auto-scaling-group monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --launch-configuration lc1 --availability-zones us-west-2a --min-size 1 --max-size 1
     OK-Created AutoScalingGroup
@@ -32,6 +68,13 @@ First we need to set up an Auto Scaling Group, otherwise Chaos Monkey will have 
 * **Note:**  the availability-zone should be set to a zone available to your account.
 
 ### See Auto Scaling Group running
+
+Using the new CLI:
+```shell
+aws autoscaling describe-auto-scaling-groups --output text
+```
+
+Using the old CLI:
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-describe-auto-scaling-groups -I $ACCOUNT_KEY -S $SECRET_KEY
     AUTO-SCALING-GROUP  monkey-target  lc1  us-west-2a  1  1  1
@@ -91,7 +134,10 @@ If you prefer using Instance Roles to set your access policy, you can do so by l
 
 ## Setup SimpleDB Table
 
-### Create SIMIAN_ARMY SimpleDB Table
+### Create SIMIAN_ARMY SimpleDB Table manually
+
+With a recent code merge, the SimpleDB should now be created automatically.  However, if you do need to create it manually for some reason, here is how to do so.
+
 There does not appear to be a simple free toolset offered by Amazon for SimpleDB interaction.  Here is a shell function that does most of what is needed for our setup.  For some reason the signature generation does not seem to work reliably, so if you get an error from the SimpleDB service, try it a few times.
 ```shell
     $ sdb() {
@@ -269,11 +315,25 @@ If you don't plan to run Chaos Monkey again for a while, you can delete the Simp
 ```
 
 Then you can get rid of the monkey-target test ASG.  The first step is to reduce the instance count to zero:
+
+New tools:
+```shell
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name monkey-target --min-size 0 --max-size 0
+```
+
+Old tools:
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-update-auto-scaling-group --name monkey-target -I $ACCOUNT_KEY -S $SECRET_KEY --min-size 0 --max-size 0
     OK-Updated AutoScalingGroup
 ```
 Then poll with **as-describe-auto-scaling-groups** as above until there are no instances ready. After the instances have been terminated then you can delete the ASG:
+
+New tools:
+```shell
+aws autoscaling delete-auto-scaling-group --auto-scaling-group-name monkey-target
+```
+
+Old tools:
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-delete-auto-scaling-group -I $ACCOUNT_KEY -S $SECRET_KEY --auto-scaling-group monkey-target
     
@@ -282,6 +342,13 @@ Then poll with **as-describe-auto-scaling-groups** as above until there are no i
 ```
 
 Finally delete the *lc1* launch config we created:
+
+Old tools:
+```shell
+aws autoscaling delete-launch-configuration --launch-configuration-name lc1 
+```
+
+New tools:
 ```shell
     $ $AWS_AUTO_SCALING_HOME/bin/as-delete-launch-config lc1 -I $ACCOUNT_KEY -S $SECRET_KEY
     
