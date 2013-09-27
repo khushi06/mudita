@@ -120,6 +120,8 @@ Monkeys within the SimianArmy require permissions to a set of actions. The easie
         "sdb:DomainMetadata",
         "sdb:GetAttributes",
         "sdb:PutAttributes",
+        "sdb:ListDomains",
+        "sdb:CreateDomain",
         "sdb:Select"
       ],
       "Effect": "Allow",
