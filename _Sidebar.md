@@ -2,9 +2,8 @@
 * [[Quick Start Guide]]
 * [[Configuration]]
 * [[REST]]
-* [[Monkeys]]
-
-** [Chaos Monkey](wiki/Chaos-Home)
+* Monkeys
+** [[Chaos Monkey]]
 ** [Janitor Monkey](wiki/Janitor-Home)
 ** [Conformity Monkey](wiki/Conformity-Home)
 
