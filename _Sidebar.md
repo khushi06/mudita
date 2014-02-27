@@ -6,7 +6,6 @@
 ** [[Chaos Monkey]]
 ** [Janitor Monkey](wiki/Janitor-Home)
 ** [Conformity Monkey](wiki/Conformity-Home)
-
 * [[Migration]]
 * [[Support]]
 
