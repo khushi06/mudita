@@ -96,7 +96,9 @@ Monkeys within the SimianArmy require permissions to a set of actions. The easie
         "ec2:DescribeInstances",
         "ec2:DescribeSnapshots",
         "ec2:DescribeVolumes",
-        "ec2:TerminateInstances"
+        "ec2:TerminateInstances",
+        "ses:SendEmail",
+        "elasticloadbalancing:*"  
       ],
       "Effect": "Allow",
       "Resource": "*"
