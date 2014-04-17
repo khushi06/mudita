@@ -175,7 +175,7 @@ Now use the sdb function to create the necessary SIMIAN_ARMY domain
 * **Note:** The sdb function above is a hack, it sort of works most of the time.  If you know of a better way to create a SimpleDB table, then use it.  [Asgard](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html) allows you to trivially create SimpleDB tables.
 
 ## Build the Monkeys with Gradle
-* First check out the code from github and then build with gradle
+* First check out the code from github and then build with gradle (make sure you are using Java 6)
 ```shell
     $ git clone git://github.com/Netflix/SimianArmy.git
     Cloning into 'SimianArmy'...
