@@ -4,8 +4,8 @@
 * [[REST]]
 * Monkeys
   * [[Chaos Monkey]]
-  * [Janitor Monkey](wiki/Janitor-Home)
-  * [Conformity Monkey](wiki/Conformity-Home)
+  * [Janitor Monkey](Janitor-Home)
+  * [Conformity Monkey](Conformity-Home)
 * [[Migration]]
 * [[Support]]
 
