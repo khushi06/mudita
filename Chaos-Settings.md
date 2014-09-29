@@ -4,7 +4,7 @@ With these properties you can control how chaos monkey operates.
 #### simianarmy.chaos.enabled
 This property allows the Chaos Monkey to run.  The default is "true".  Note that an enabled Chaos monkey does not mean it is also allowed to terminate instances.  It must also have the leashed property set to "false".
 ```
-    simianarmy.chaos.enabled = true
+     simianarmy.chaos.enabled = true
 ```
 
 #### simianarmy.chaos.leashed
