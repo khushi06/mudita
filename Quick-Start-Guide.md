@@ -158,7 +158,7 @@ There does not appear to be a simple free toolset offered by Amazon for SimpleDB
         params="$params&Version=2009-04-15"
         payload="GET\nsdb.us-west-2.amazonaws.com\n/\n$params"
         hash=$(echo -ne $payload | openssl dgst -sha256 -hmac "$SECRET_KEY" -binary | base64)
-        curl "https://sdb.us-west-2.amazonaws.com/?$params&Signature=$hash"
+        curl -H application/x-www-form-urlencoded "https://sdb.us-west-2.amazonaws.com/?$params&Signature=$hash"
     }
 ```
 Now use the sdb function to create the necessary SIMIAN_ARMY domain
