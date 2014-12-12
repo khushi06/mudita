@@ -174,6 +174,11 @@ Now use the sdb function to create the necessary SIMIAN_ARMY domain
 * **Note:** If you are not using the us-west-2 region then you will need to change the SimpleDB URI in the above sdb function to correspond to your region.  See [this document](http://docs.amazonwebservices.com/general/latest/gr/rande.html#sdb_region) for SimpleDB Region endpoints.
 * **Note:** The sdb function above is a hack, it sort of works most of the time.  If you know of a better way to create a SimpleDB table, then use it.  [Asgard](http://techblog.netflix.com/2012/06/asgard-web-based-cloud-management-and.html) allows you to trivially create SimpleDB tables.
 
+## Setup Simple Email Service account 
+If you want to receive email notifications then you need to use a validated email account in SES. Using the console setup and validate any to/from email addresses or validate your domain for the us-east-1 region.
+
+* **Note:** The scripts currently send email through us-east-1 even if your configuration is changed to a different region.
+
 ## Build the Monkeys with Gradle
 * First check out the code from github and then build with gradle (make sure you are using the Java 6 JDK)
 ```shell
