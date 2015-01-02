@@ -1,1 +1,0 @@
-Please join the [SimianArmy Google Group](http://groups.google.com/group/simianarmy-users) to ask questions or if you are interested in helping out.
