@@ -1,32 +1,4 @@
-Service Solahart  cp 081298283776
-
-CV.Eka Mandiri Jaya melayani service / perbaikan & penjualan Solahart Water Heater, kami melayani service water heater tenaga surya berbagai merk dan model seperti: Solahart / Handal, Wika swh, Edwards dan lain-lain.
-
-service solahart:
-
--tidak panas
-
--tanky / pipa bocor
-
--tekanan air kurang kencang
-
--bongkar-pasang
-
--pemasangan intalasi pipa air panas & air dingin
-
--ganti sparepart
-
--service berkala & lain sebagainya.
-
-service dilakukan oleh team teknisi Cv.Eka Mandiri Jaya yang berpengalaman dengan penanganan sesuai standart spesifikasi pabriknya, pelayanan kami sesuai yang dibutuhkan dan memberikan rekomendasi mengenai solusi yang paling ekonomis.
-
-Cv.Eka Mandiri Jaya Service
-
-Telp 02191389699
-
-Hp 081298283776 / 081291315510
-
-E-Mail ekamandirijaya2@gmail.com
+Service Solahart + (021) 34082652 – 082122541663 service wika swh tidak panas, bocor, bongkar pasang, pemasangan pipa air panas & air dingin pengecekan berkala & lain lain CV. Davinatama Service Jakarta Indonesia
 ## GET /api/v1/chaos
 
 This will fetch all chaos events in the last 24 hours.  Output is always json.
