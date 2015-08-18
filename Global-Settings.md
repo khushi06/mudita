@@ -52,3 +52,18 @@ This is a calendar override used for testing.  It should not be set in your prop
 ```
     simianarmy.calendar.isMonkeyTime = false
 ```
+
+### Misc Properties
+Properties to address specific issues.
+
+#### simianarmy.tags.owner
+Allows you to Set the (case sensitive) AWS Tag Key to use for owner tags; e.g. "Owner" or "owner:. It is Monkey Wide - used by all Monkeys. If not set defaults to "owner"
+```
+    simianarmy.tags.owner = owner
+```
+
+#### simianarmy.aws.email.region
+Region override for Amazon Simple Email Service Client, allows a specific region to be specified for the the SES client.  If not set, default to "us-east-1".
+```
+    simianarmy.aws.email.region = us-east-1
+```
