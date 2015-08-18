@@ -43,6 +43,24 @@ All actions will be performed under this assumed role. There is some additional 
    simianarmy.client.aws.assumeRoleArn = arn:aws:iam::ACCOUNT:role/ROLE
 ```
 
+#### simianarmy.client.aws.accountName
+Common account name to make it easier to identify emails by subject.  If you are running multiple SimianArmy instances in multiple accounts you will get multiple emails a day from Janitor Monkey.  By default it can be hard to determine which account the instances, ASG's, etc, pertain to in each email. By setting this property you can see an account identifier in the Janitor Monkey emails. 
+
+```
+simianarmy.client.aws.accountName = 
+```
+
+#### simianarmy.client.aws.proxy
+Use these properties if a proxy is needed to connect to AWS APIs.
+proxyHost and proxyPort are required to connect through a proxy.  proxyUser and proxyPassword are optional.
+
+```
+simianarmy.client.aws.proxyHost=
+simianarmy.client.aws.proxyPort=
+simianarmy.client.aws.proxyUser=
+simianarmy.client.aws.proxyPassword=
+```
+
 ### VSpehere Client Properties
 When using the VSphere Client, the client has to be configured with the following VSphere Client specific properties. As stated above, in addition the aws client properties to access the Amazon SimpleDB also have to be correctly configured.
 
