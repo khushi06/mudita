@@ -20,7 +20,7 @@ The value needs to be one of the [java.util.concurrent.TimeUnit](http://docs.ora
 ```
 
 #### simianarmy.scheduler.threads
-This sets how many monkeys to run in parallel.  Since there is only one monkey currently in the Simian Army anything more than 1 is not useful at the moment.  The default is 1.
+This sets how many monkeys to run in parallel.  The default is 1.
 ```
     simianarmy.scheduler.threads = 1
 ```
@@ -42,7 +42,7 @@ This sets when the monkeys are closed for business. They will not run if the cur
 
 #### simianarmy.calendar.timezone
 This sets the timezone for where the clocks should be tracked.  If the monkeys are running in eu-west-1 you might still only want them to run during the business hours of your office on the US West coast.  The default is America/Los_Angeles.
-You can find other possible values [here](http://docs.oracle.com/cd/E19653-01/819-4438/acfib/index.html).
+You can find other possible values [here](https://docs.oracle.com/cd/E26401_01/doc.122/e20929/T319774T319789.htm).
 ```
     simianarmy.calendar.timezone = America/Los_Angeles
 ```
