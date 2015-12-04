@@ -12,7 +12,7 @@ simianarmy.calendar.closeHour = 11
 simianarmy.calendar.timezone = America/Los_Angeles
 ```
 ####simianarmy.calendar.isMonkeyTime
-To ease debug/dryrun, you can set this property to true so the monkey will always be able to run. This property also overrides the value in **simianarmy.properties**. The default value is false.
+To ease debug/dryrun, you can set this property to true so the monkey will always be able to run. This property also overrides the value in **simianarmy.properties**. If set to false, normal MonkeyCalendar logic is executed to determine when the monkey should run. The default value is false.
 ```
 simianarmy.calendar.isMonkeyTime = false
 ```
