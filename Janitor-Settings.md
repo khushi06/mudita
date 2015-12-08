@@ -134,6 +134,14 @@ This property specifies the number of business days the snapshot is retained aft
 simianarmy.janitor.rule.noGeneratedAMIRule.retentionDays = 7
 ```
 
+#### simianarmy.janitor.rule.noGeneratedAMIRule.ownerEmail
+This property specifies an override owner email when cleaning EBS Snapshots with this rule. This will enable notification emails to be sent to a different email target rather than the resource owner. This could be useful for organizations that create a lot of snapshots as part of their build process and notifying owners is unnecessary.
+
+The default value for this property is null meaning the resource owner will be notified and not the override value.
+```
+simianarmy.janitor.rule.noGeneratedAMIRule.ownerEmail = null
+```
+
 ### Setting rule of cleaning up empty auto scaling groups
 The properties below are used to configure the rule used for cleaning up auto scaling groups that have no active instances and the launch configuration is more than certain days old.
 
