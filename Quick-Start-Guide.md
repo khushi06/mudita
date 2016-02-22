@@ -180,7 +180,7 @@ If you want to receive email notifications then you need to use a validated emai
 * **Note:** The scripts currently send email through us-east-1 even if your configuration is changed to a different region.
 
 ## Build the Monkeys with Gradle
-* First check out the code from github and then build with gradle (make sure you are using a Java 7 JDK or newer)
+* First check out the code from github and then build with gradle. Make sure you are using a Java 8 JDK or newer. Building requires Java 8 because of dependent libraries that are Java 8, but the source and target compatibility are still set to 1.7.
 ```shell
     $ git clone git://github.com/Netflix/SimianArmy.git
     Cloning into 'SimianArmy'...
